@@ -6,11 +6,11 @@ const logger = require('./config/logger');
 let server;
 const initMongoDB = () => {
   mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
-  logger.info('Connected to MongoDB');
+    logger.info('Connected to MongoDB');
   }).catch((e) => {
     logger.warn('MongoDB connection error', e);
-  })
-}
+  });
+};
 
 server = app.listen(config.port, () => {
   initMongoDB();
