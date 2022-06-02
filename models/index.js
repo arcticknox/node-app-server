@@ -2,13 +2,17 @@ const fs = require('fs');
 
 let moduleExports = {};
 
-const extendExports = (filename) => {
+const exportModules = (filename) => {
   if (filename === 'index.js') return;
-  let key = (filename.split('.')[0]);
-  key = key.charAt(0).toUpperCase() + key.slice(1);
-  moduleExports[key] = require(`./${filename}`);
+  const splitKey = filename.split('.');
+  splitKey.pop();
+  let finalKey = '';
+  splitKey.forEach((key) => {
+    finalKey = finalKey + key.charAt(0).toUpperCase() + key.slice(1);
+  });
+  moduleExports[finalKey] = require(`./${filename}`);
 };
 
-fs.readdirSync(__dirname).forEach(extendExports);
+fs.readdirSync(__dirname).forEach(exportModules);
 console.log('Loading models...');
 module.exports = moduleExports;
